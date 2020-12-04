@@ -23,11 +23,13 @@ _model_factory = {
   'hrnet': get_pose_net_hrnet
 }
 
-def create_model(arch, heads, head_conv):
+def create_model(arch, heads, head_conv, pretrained=True):
   num_layers = int(arch[arch.find('_') + 1:]) if '_' in arch else 0
   arch = arch[:arch.find('_')] if '_' in arch else arch
   get_model = _model_factory[arch]
-  model = get_model(num_layers=num_layers, heads=heads, head_conv=head_conv)
+  model = get_model(
+    num_layers=num_layers, heads=heads, head_conv=head_conv, pretrained=pretrained
+  )
   return model
 
 def load_model(model, model_path, optimizer=None, resume=False, 
